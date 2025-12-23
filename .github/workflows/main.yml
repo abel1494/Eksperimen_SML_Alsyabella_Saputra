@@ -1,4 +1,5 @@
 name: Automate Preprocessing
+
 on:
   push:
     branches: [ "main" ]
@@ -26,6 +27,7 @@ jobs:
         KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
         KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
       run: |
+        # Ini menjalankan file automate_alsyabella.py milikmu
         python preprocessing/automate_alsyabella.py
 
     - name: Upload Clean Dataset

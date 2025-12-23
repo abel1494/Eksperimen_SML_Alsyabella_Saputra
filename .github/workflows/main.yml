@@ -1,0 +1,36 @@
+name: Automate Preprocessing
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  masak-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: |
+        pip install pandas numpy scikit-learn nltk beautifulsoup4 kaggle matplotlib seaborn
+
+    - name: Run Preprocessing Script
+      env:
+        KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+        KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      run: |
+        python preprocessing/automate_alsyabella.py
+
+    - name: Upload Clean Dataset
+      uses: actions/upload-artifact@v4
+      with:
+        name: dataset-bersih-alsyabella
+        path: preprocessing/stacksample_preprocessing/
